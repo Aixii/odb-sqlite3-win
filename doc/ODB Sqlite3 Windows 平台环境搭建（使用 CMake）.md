@@ -1,5 +1,8 @@
+
 ## 0. 前言
+
 本示例已上传开源仓库：[odb-sqlite3-win](https://github.com/Aixii/odb-sqlite3-win)
+
 ## 1. 下载需要的资源
 
 A. libodb-2.4.0
@@ -17,11 +20,12 @@ C. sqlite-amalgamation-3470200
 D. odb-2.4.0-i686-windows
 简述：odb 的依赖的环境
 下载链接：[官网点击下载](https://codesynthesis.com/download/odb/2.4/odb-2.4.0-i686-windows.zip)
+
 ## 2. 编写 CMakeLists.txt
 
 将以上资源解压后放到一个文件夹下, 这些文件夹下保留这些即可，需要将 libodb-2.4.0/odb 下的内容全部拷贝到 libodb-sqlite-2.4.0/odb 下。
 
-```
+```txt
 ├─libodb-2.4.0
 │  ├─odb
 │  └─CMakeLists.txt
@@ -41,6 +45,7 @@ D. odb-2.4.0-i686-windows
 ```
 
 ### A. 最外层 CMakeLists.txt
+
 ```cmake
 cmake_minimum_required(VERSION 3.10)
 
@@ -67,7 +72,9 @@ install(DIRECTORY odb-2.4.0-i686-windows/etc DESTINATION ${CMAKE_INSTALL_PREFIX}
 install(DIRECTORY odb-2.4.0-i686-windows/man DESTINATION ${CMAKE_INSTALL_PREFIX})
 install(DIRECTORY odb-2.4.0-i686-windows/mingw DESTINATION ${CMAKE_INSTALL_PREFIX})
 ```
+
 ### B. libodb-2.4.0 下的 CMakeLists.txt
+
 ```cmake
 set(TARGET_NAME odb-2.4)
 
@@ -154,7 +161,9 @@ install(FILES ${INSTALL_INCLUDE_FILES}	DESTINATION ${CMAKE_INSTALL_PREFIX}/inclu
 file(GLOB INSTALL_INCLUDE_FILES odb/compilers/vc/*.hxx)
 install(FILES ${INSTALL_INCLUDE_FILES}	DESTINATION ${CMAKE_INSTALL_PREFIX}/include/odb/compilers/vc)
 ```
+
 ### C. sqlite-amalgamation-3470200 下的 CMakeLists.txt
+
 ```cmake
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
@@ -183,7 +192,9 @@ install(FILES sqlite3.h
         DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
 
 ```
+
 ### D. libodb-sqlite-2.4.0 下的 CMakeLists.txt
+
 ```cmake
 set(TARGET_NAME odb-sqlite3-2.4)
 
@@ -239,13 +250,15 @@ install(FILES ${INSTALL_INCLUDE_FILES}	DESTINATION ${CMAKE_INSTALL_PREFIX}/inclu
 
 以 VS2022 为例，打开 cmake-gui 做以下操作， 在第一次点击 Configure 时，选择自己要创建的目标架构是 x86 就选 win32; 是 x64 就选 x64。
 
-![](./img/20250105140836.png)
+![图片](./img/20250105140836.png)
 
 ## 4. 编译工程
 
-![](./img/20250105141643.png)
+![图片](./img/20250105141643.png)
+
 ## 5. 使用 odb
-```
+
+```txt
 └─odb-x86
     ├─bin
     ├─etc
@@ -264,6 +277,8 @@ install(FILES ${INSTALL_INCLUDE_FILES}	DESTINATION ${CMAKE_INSTALL_PREFIX}/inclu
     └─runtime
 ```
 
+本示例中，[test](https://github.com/Aixii/odb-sqlite3-win/tree/master/test) 路径下是已经搭建好的一个示例工程。请使用 cmake-gui 工具生成 vs 工程进行编译吧。
+
 介绍一下，使用 odb 的项目需要使用 odb.exe 对编辑的文件先进行一次解释，生成 hxx 和 cxx 文件参与编译。
 
 这里可以下载 odb 示例进行参考：[odb-examples-2.4.0.zip](https://codesynthesis.com/download/odb/2.4/odb-examples-2.4.0.zip)
@@ -274,9 +289,12 @@ install(FILES ${INSTALL_INCLUDE_FILES}	DESTINATION ${CMAKE_INSTALL_PREFIX}/inclu
 将示例 relationship 中的 driver.cxx 内容全部拷贝到 main.cpp 中。  
 
 ### A. main.cpp
+
 main.cpp 中修改了几个地方，修改的目的是在代码中创建数据库。  
-1. 注释掉 `#include "database.hxx"`
+
+1. 注释掉 `#include "database.hxx"`  
 2. 修改 main 函数中 `create_database` 处的代码为：
+
 ```cxx
 std::auto_ptr<database> db(new odb::sqlite::database("hello.db", SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE));
 {
@@ -288,10 +306,13 @@ std::auto_ptr<database> db(new odb::sqlite::database("hello.db", SQLITE_OPEN_REA
 	t.commit();
 }
 ```
+
 3. 在代码末尾添加 `system("pause");` 否则黑窗口一闪而过，在最后异常处理 return 前也添加上。
 
 ### B. CMakeLists.txt
+
 CMakeLists.txt 的内容：
+
 ```cmake
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -392,6 +413,7 @@ ${ODB_PATH}/runtime/odb-sqlite3-2.4${LIBRARY_SUFFIX}.dll
 ${ODB_PATH}/runtime/sqlite3${LIBRARY_SUFFIX}.dll 
 DESTINATION ${CMAKE_INSTALL_PREFIX})
 ```
+
 ### C. 编译与运行
 
 1. 用 cmake-gui 生成 vs 工程，默认即可（选择自己的目标平台 x86 或 x64）。
