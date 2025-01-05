@@ -239,11 +239,11 @@ install(FILES ${INSTALL_INCLUDE_FILES}	DESTINATION ${CMAKE_INSTALL_PREFIX}/inclu
 
 以 VS2022 为例，打开 cmake-gui 做以下操作， 在第一次点击 Configure 时，选择自己要创建的目标架构是 x86 就选 win32; 是 x64 就选 x64。
 
-![[图片/Pasted image 20250105140836.png]]
+![](./img/20250105140836.png)
 
 ## 4. 编译工程
 
-![[图片/Pasted image 20250105141643.png]]
+![](./img/20250105141643.png)
 ## 5. 使用 odb
 ```
 └─odb-x86
