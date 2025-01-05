@@ -5,10 +5,10 @@
 #include <memory> // std::auto_ptr
 
 #include <odb/database.hxx>
-#include <odb/session.hxx>
-#include <odb/transaction.hxx>
-#include <odb/sqlite/database.hxx>
 #include <odb/schema-catalog.hxx>
+#include <odb/session.hxx>
+#include <odb/sqlite/database.hxx>
+#include <odb/transaction.hxx>
 
 // #include "database.hxx" // create_database
 
@@ -18,10 +18,9 @@
 //using namespace std;
 using namespace odb::core;
 
-void print(const employee& e)
-{
+void print(const employee& e) {
     std::cout << e.first() << " " << e.last() << std::endl
-         << "  employer: " << e.employer()->name() << std::endl;
+              << "  employer: " << e.employer()->name() << std::endl;
 
     const projects& ps(e.projects());
 
@@ -33,15 +32,12 @@ void print(const employee& e)
     std::cout << std::endl;
 }
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     using std::tr1::shared_ptr;
 
     try {
         std::auto_ptr<database> db(new odb::sqlite::database("hello.db", SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE));
-
         {
-        
             // 开始事务
             odb::transaction t(db->begin());
 
@@ -112,7 +108,7 @@ int main(int argc, char* argv[])
             }
         }
 
-        typedef odb::query<employee> query;
+        typedef odb::query<employee>  query;
         typedef odb::result<employee> result;
 
         // Load employees with "Doe" as the last name and print what we've got.
@@ -121,7 +117,7 @@ int main(int argc, char* argv[])
         // shared among all objects (e.g., employee) that relate to it.
         //
         {
-            session s;
+            session     s;
             transaction t(db->begin());
 
             result r(db->query<employee>(query::last == "Doe"));
@@ -136,11 +132,11 @@ int main(int argc, char* argv[])
         // Complex Hardware.
         //
         {
-            session s;
+            session     s;
             transaction t(db->begin());
 
             shared_ptr<employer> csi(db->load<employer>("Complex Systems Inc"));
-            shared_ptr<project> ch(db->load<project>("Complex Hardware"));
+            shared_ptr<project>  ch(db->load<project>("Complex Hardware"));
 
             shared_ptr<employee> john(
                 db->query_one<employee>(query::first == "John" && query::last == "Doe"));
@@ -158,7 +154,7 @@ int main(int argc, char* argv[])
         // following transaction prints all the employees of Complex Systems Inc.
         //
         {
-            session s;
+            session     s;
             transaction t(db->begin());
 
             result r(db->query<employee>(
@@ -169,7 +165,8 @@ int main(int argc, char* argv[])
 
             t.commit();
         }
-    } catch (const odb::exception& e) {
+    }
+    catch (const odb::exception& e) {
         std::cerr << e.what() << std::endl;
         system("pause");
         return 1;

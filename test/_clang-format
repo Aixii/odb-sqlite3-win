@@ -1,0 +1,31 @@
+Language: Cpp
+BasedOnStyle: WebKit
+BreakConstructorInitializersBeforeComma: true
+SpaceInEmptyBlock: true
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel:  false
+  AfterClass:      false
+  AfterControlStatement: false
+  AfterEnum:       true
+  AfterFunction:   false
+  AfterNamespace:  false
+  AfterObjCDeclaration: true
+  AfterStruct:     true
+  AfterUnion:      true
+  AfterExternBlock: true
+  BeforeCatch:     true
+  BeforeElse:      true
+  BeforeLambdaBody: false
+  BeforeWhile:     true
+  IndentBraces:    false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: true
+AllowShortFunctionsOnASingleLine: true
+AllowShortLambdasOnASingleLine: Empty
+BreakInheritanceList: BeforeComma
+AlignConsecutiveMacros: true
